@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -14,35 +15,21 @@ pipeline {
             }
         }
 
-        stage('Install dependencies') {
+        stage('Install Dependencies') {
             steps {
                 bat '"%PYTHON%" -m pip install -r requirements.txt'
             }
         }
 
-        stage('Run tests') {
+        stage('Run Tests') {
             steps {
                 bat '"%PYTHON%" -m pytest -v'
             }
         }
 
-        stage('Build Docker image') {
+        stage('Build Docker Image') {
             steps {
                 bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'
-            }
-        }
-
-        stage('Push image to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
-                    bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
-                    bat 'docker logout'
-                }
             }
         }
 
@@ -50,14 +37,32 @@ pipeline {
             steps {
                 bat 'kubectl apply -f k8s/deployment.yaml'
                 bat 'kubectl apply -f k8s/service.yaml'
+                bat 'kubectl rollout restart deployment/online-bookstore'
                 bat 'kubectl rollout status deployment/online-bookstore --timeout=120s'
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                bat 'kubectl get deployments'
+                bat 'kubectl get pods -l app=online-bookstore'
+                bat 'kubectl get services'
             }
         }
     }
 
     post {
+        success {
+            echo 'Online Bookstore CI/CD Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed. Please check the Jenkins console output.'
+        }
+
         always {
-            echo 'Online Bookstore pipeline finished.'
+            echo 'Online Bookstore pipeline execution finished.'
         }
     }
 }
+
