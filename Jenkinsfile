@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "ranjitha28/online-bookstore"
         IMAGE_TAG = "latest"
+        PYTHON = "C:/Users/ranji/AppData/Local/Programs/Python/Python313/python.exe"
     }
 
     stages {
@@ -15,13 +16,13 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                bat 'python -m pip install -r requirements.txt'
+                bat '"%PYTHON%" -m pip install -r requirements.txt'
             }
         }
 
         stage('Run tests') {
             steps {
-                bat 'python -m pytest -q'
+                bat '"%PYTHON%" -m pytest -v'
             }
         }
 
@@ -38,7 +39,7 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                     bat 'docker logout'
                 }
