@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "YOUR_DOCKERHUB_USERNAME/online-bookstore"
+        IMAGE_NAME = "ranjitha28/online-bookstore"
         IMAGE_TAG = "latest"
     }
 

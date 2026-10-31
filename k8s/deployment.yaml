@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: bookstore
-          image: YOUR_DOCKERHUB_USERNAME/online-bookstore:latest
+          image: ranjitha28/online-bookstore:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
