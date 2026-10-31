@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Online Bookstore</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">READ • LEARN • GROW</p>
+      <h1>Online Bookstore</h1>
+      <p>Discover your next favourite book.</p>
+    </div>
+  </header>
+  <main class="wrap">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}<div class="notice">{% for message in messages %}{{ message }}{% endfor %}</div>{% endif %}
+    {% endwith %}
+    <section>
+      <h2>Available books</h2>
+      <div class="grid">
+        {% for book in books %}
+        <article class="card">
+          <div class="cover">BOOK</div>
+          <div>
+            <h3>{{ book.title }}</h3>
+            <p class="author">by {{ book.author }}</p>
+            <p>{{ book.description }}</p>
+            <strong>₹{{ "%.2f"|format(book.price) }}</strong>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="add-section">
+      <h2>Add a book</h2>
+      <form action="{{ url_for('add_book') }}" method="post">
+        <input name="title" placeholder="Book title" required>
+        <input name="author" placeholder="Author" required>
+        <input name="price" type="number" min="1" step="0.01" placeholder="Price (₹)" required>
+        <textarea name="description" placeholder="Short description" required></textarea>
+        <button type="submit">Add book</button>
+      </form>
+    </section>
+  </main>
+  <footer>Online Bookstore • DevOps Case Study</footer>
+</body>
+</html>

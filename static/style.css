@@ -1,0 +1,23 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; color: #20283a; background: #f4f6fb; line-height: 1.5; }
+.wrap { width: min(1000px, 92%); margin: auto; }
+header { background: linear-gradient(120deg, #142b55, #315e9c); color: white; padding: 42px 0; }
+header h1 { margin: 4px 0; font-size: 2.5rem; }
+header p { margin: 4px 0; }
+.eyebrow { letter-spacing: 3px; font-size: .75rem; opacity: .8; }
+main { padding: 28px 0 48px; }
+h2 { margin-top: 12px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.card { background: white; border-radius: 12px; padding: 18px; display: flex; gap: 16px; box-shadow: 0 5px 18px #142b5510; }
+.cover { min-width: 64px; height: 90px; display: grid; place-items: center; background: #e4ecfa; color: #315e9c; font-weight: bold; writing-mode: vertical-rl; border-radius: 5px; }
+.card h3 { margin: 0; }
+.card p { margin: 5px 0; }
+.author { color: #65718a; font-size: .9rem; }
+.card strong { color: #1c6a4a; }
+.add-section { margin-top: 32px; background: white; padding: 22px; border-radius: 12px; }
+form { display: grid; gap: 12px; max-width: 560px; }
+input, textarea { padding: 12px; border: 1px solid #ccd4e2; border-radius: 7px; font: inherit; }
+textarea { min-height: 80px; }
+button { padding: 12px; border: 0; border-radius: 7px; color: white; background: #24569a; font-weight: bold; cursor: pointer; }
+.notice { background: #e4f6e9; padding: 12px; border-radius: 7px; margin-bottom: 16px; }
+footer { text-align: center; padding: 22px; color: #65718a; }
